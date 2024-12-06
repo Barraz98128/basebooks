@@ -2,17 +2,20 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config(); // Importar variables de entorno desde .env
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
-// Conectar a MongoDB Atlas
-const uri = "mongodb+srv://Gregorio:Gregorio200@cluster0.djnazdz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Conectado a MongoDB Atlas'))
-    .catch(err => console.error('Error de conexión:', err));
+// Conectar a MongoDB Atlas usando una URI segura desde .env
+const dbUri = process.env.MONGO_URI || "mongodb+srv://Gregorio:Gregorio200@cluster0.djnazdz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+mongoose
+  .connect(dbUri, { useNewUrlParser: true })
+  .then(() => console.log('Conectado a MongoDB Atlas'))
+  .catch(err => console.error('Error de conexión:', err));
 
 // Esquema y modelo
 const registroSchema = new mongoose.Schema({
@@ -26,8 +29,7 @@ const registroSchema = new mongoose.Schema({
     edad: Number
 });
 
-
-const Registro = mongoose.model('Rbases de datos', registroSchema);
+const Registro = mongoose.model('Registro', registroSchema);
 
 // Ruta para agregar o modificar registros
 app.post('/addOrUpdate', async (req, res) => {
@@ -49,7 +51,6 @@ app.post('/addOrUpdate', async (req, res) => {
         res.status(500).send('Error al agregar o modificar el registro');
     }
 });
-
 
 // Ruta para eliminar registros
 app.post('/delete', async (req, res) => {
