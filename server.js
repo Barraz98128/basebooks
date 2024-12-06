@@ -13,7 +13,7 @@ app.use(cors());
 const dbUri = process.env.MONGO_URI || "mongodb+srv://Gregorio:Gregorio200@cluster0.djnazdz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 mongoose
-  .connect(dbUri, { useNewUrlParser: true })
+  .connect(dbUri)
   .then(() => console.log('Conectado a MongoDB Atlas'))
   .catch(err => console.error('Error de conexión:', err));
 
