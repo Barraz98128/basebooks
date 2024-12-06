@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Registros con Fechas y Números</title>
+    <link rel="stylesheet" href="styles.css">
+
+
+</head>
+<body>
+    <h1>Gestión de Registros de libros en MongoDB</h1>
+
+    <!-- Formulario para agregar o modificar registros -->
+    <h2>Agregar/Modificar Registro</h2>
+    <form id="registro-form" method="POST" action="http://localhost:3000/addOrUpdate">
+        <label for="id">ID (solo para modificar):</label>
+        <input type="text" id="id" name="id" placeholder="Dejar vacío para agregar un nuevo registro"><br><br>
+
+        <label for="nombrelibro">Nombre del libro:</label>
+        <input type="text" id="nombrelibro" name="nombrelibro" required><br><br>
+
+        <label for="autor">Autor:</label>
+        <input type="text" id="autor" name="autor" required><br><br>
+        
+        <label for="message">Genero:</label>
+        <textarea id="message" name="message" required></textarea><br><br>
+
+
+        <h2>Agregar datos personales</h2>
+        
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+        
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" required><br><br>
+
+        <label for="correo">Correo Electronico:</label>
+        <input type="email" id="correo" name="correo" required><br><br>
+
+        <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fecha-nacimiento" name="fechaNacimiento" required><br><br>
+
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" min="01" max="99" required><br><br>
+
+        <button type="submit">Guardar</button>
+    </form>
+
+    <!-- Formulario para eliminar registros -->
+    <h2>Eliminar Registro</h2>
+    <form id="delete-form" method="POST" action="http://localhost:3000/delete">
+        <label for="delete-id">ID del Registro a Eliminar:</label>
+        <input type="text" id="delete-id" name="id" required><br><br>
+
+        <button type="submit">Eliminar</button>
+    </form>
+
+    <!-- Botón para ver todos los registros -->
+    <h2>Ver Todos los Registros</h2>
+    <form method="GET" action="http://localhost:3000/view">
+        <button type="submit">Ver Registros</button>
+    </form>
+</body>
+</html>
