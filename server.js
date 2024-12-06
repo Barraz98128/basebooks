@@ -9,6 +9,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+// Configurar Express para servir archivos estáticos desde la carpeta 'public'
+app.use(express.static('public'));  // Sirve todo desde la carpeta 'public'
+
 // Conectar a MongoDB Atlas usando una URI segura desde .env
 const dbUri = process.env.MONGO_URI || "mongodb+srv://Gregorio:Gregorio200@cluster0.djnazdz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -31,7 +34,7 @@ const registroSchema = new mongoose.Schema({
 
 const Registro = mongoose.model('Registro', registroSchema);
 
-// Ruta para agregar o modificar registros
+// Rutas de la API
 app.post('/addOrUpdate', async (req, res) => {
     const { id, nombrelibro, autor, nombre, apellido, correo, message, fechaNacimiento, edad } = req.body;
     try {
@@ -52,7 +55,6 @@ app.post('/addOrUpdate', async (req, res) => {
     }
 });
 
-// Ruta para eliminar registros
 app.post('/delete', async (req, res) => {
     try {
         const { id } = req.body;
@@ -63,7 +65,6 @@ app.post('/delete', async (req, res) => {
     }
 });
 
-// Ruta para ver todos los registros
 app.get('/view', async (req, res) => {
     try {
         const registros = await Registro.find();
@@ -71,6 +72,11 @@ app.get('/view', async (req, res) => {
     } catch (err) {
         res.status(500).send('Error al obtener los registros');
     }
+});
+
+// Ruta para servir el archivo HTML en la raíz (/) 
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html'); // Asegúrate de que 'index.html' esté en la carpeta 'public'
 });
 
 // Iniciar el servidor
